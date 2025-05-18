@@ -1,9 +1,23 @@
-name: CI Pipeline
-on: [push, pull_request]
+name: Basic CI
+
+on: [push, pull_request]  # Triggers on pushes and PRs
+
 jobs:
   test:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest  # Fastest option (modify if multi-OS is needed)
+    
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4  # Checks out repo code
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.12.5"
+
+      - name: Check Python version
+        run: python --version  # Verify Python is available
+
       - name: Install dependencies
-        run: pip install -r requirements.txt
+        run: |
+          pip install -r requirements.txt
+          pip list  # Optional: Log installed packages
